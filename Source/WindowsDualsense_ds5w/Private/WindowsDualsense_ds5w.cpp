@@ -12,7 +12,11 @@
 
 #if PLATFORM_LINUX || PLATFORM_MAC
 #include "Framework/Application/SlateApplication.h"
+#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 7
+#include "SDL3/SDL.h"
+#else
 #include "SDL.h"
+#endif
 #include "Subsystems/SonyInputProcessor.h"
 #endif
 #include "DeviceManager.h"
@@ -35,7 +39,11 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 	FDeviceRegistry::Initialize();
 
 #elif PLATFORM_LINUX || PLATFORM_MAC
+#if SDL_MAJOR_VERSION >= 3
+	if (!SDL_InitSubSystem(SDL_INIT_GAMEPAD))
+#else
 	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) != 0)
+#endif
 	{
 		UE_LOG(LogDualSense, Error, TEXT("Failed to initialize subsystems of SDL: %s"), UTF8_TO_TCHAR(SDL_GetError()));
 	}
