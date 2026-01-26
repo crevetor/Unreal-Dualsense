@@ -6,7 +6,7 @@
 
 #if PLATFORM_LINUX || PLATFORM_MAC
 #include "Framework/Application/SlateApplication.h"
-#include "SDL.h"
+#include "SDL3/SDL.h"
 #include "Subsystems/SonyInputProcessor.h"
 #endif
 #include "DeviceManager.h"
@@ -20,7 +20,7 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 	IModularFeatures::Get().RegisterModularFeature(IInputDeviceModule::GetModularFeatureName(), this);
 	RegisterCustomKeys();
 #if PLATFORM_LINUX || PLATFORM_MAC
-	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) != 0)
+	if (!SDL_InitSubSystem(SDL_INIT_GAMEPAD))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed to initialize subsystems of SDL: %s"), UTF8_TO_TCHAR(SDL_GetError()));
 	}

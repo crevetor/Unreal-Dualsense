@@ -24,7 +24,7 @@ public class WindowsDualsense_ds5w : ModuleRules
 	    
 		if (Target.Platform == UnrealTargetPlatform.Linux || Target.Platform == UnrealTargetPlatform.Mac)
 		{
-			PrivateDependencyModuleNames.AddRange(new string[] { "SDL2" });
+			PrivateDependencyModuleNames.AddRange(new string[] { "SDL3" });
 		}
 	}
 }

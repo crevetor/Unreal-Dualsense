@@ -13,7 +13,7 @@ using FPlatformDeviceHandle = HANDLE;
 #define INVALID_PLATFORM_HANDLE INVALID_HANDLE_VALUE
 
 #elif PLATFORM_MAC || PLATFORM_LINUX
-#include "SDL_hidapi.h"
+#include "SDL3/SDL_hidapi.h"
 using FPlatformDeviceHandle = SDL_hid_device*;
 #define INVALID_PLATFORM_HANDLE nullptr
 #else

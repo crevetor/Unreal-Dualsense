@@ -6,7 +6,7 @@
 
 #if PLATFORM_WINDOWS
 #else
-#include "SDL_hidapi.h"
+#include "SDL3/SDL_hidapi.h"
 
 static const uint16 SONY_VENDOR_ID = 0x054C;
 static const uint16 DUALSHOCK4_PID_V1 = 0x05C4;
@@ -146,7 +146,7 @@ bool FCommonsDeviceInfo::CreateHandle(FDeviceContext* Context)
 	}
 
 	const FTCHARToUTF8 PathConverter(*Context->Path);
-	const FPlatformDeviceHandle Handle = SDL_hid_open_path(PathConverter.Get(), true);
+	const FPlatformDeviceHandle Handle = SDL_hid_open_path(PathConverter.Get());
 	if (Handle == INVALID_PLATFORM_HANDLE)
 	{
 		return false;
