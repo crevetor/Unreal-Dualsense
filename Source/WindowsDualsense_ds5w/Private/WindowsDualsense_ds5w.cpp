@@ -7,15 +7,16 @@
 #include "GCore/Interfaces/IPlatformHardwareInfo.h"
 #include "Helpers/DualSenseLog.h"
 #include "Implementations/Adapters/DeviceRegistry.h"
-#include "Implementations/Platforms/Commons/LinuxHardwarePolicy.h"
 #include "Implementations/Platforms/Windows/WindowsHardwarePolicy.h"
 
 #if PLATFORM_LINUX || PLATFORM_MAC
 #include "Framework/Application/SlateApplication.h"
-#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 7
-#include "SDL3/SDL.h"
-#else
+#if ENGINE_MAJOR_VERSION < 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 7)
+#include "Implementations/Platforms/Linux/LinuxSDL2HardwarePolicy.h"
 #include "SDL.h"
+#else
+#include "Implementations/Platforms/Linux/LinuxSDL3HardwarePolicy.h"
+#include "SDL3/SDL.h"
 #endif
 #include "Subsystems/SonyInputProcessor.h"
 #endif
@@ -50,12 +51,16 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 
 	if (FSlateApplication::IsInitialized())
 	{
-		TSharedPtr<FSonyInputProcessor> SonyInputProcessor = MakeShared<FSonyInputProcessor>();
+		SonyInputProcessor = MakeShared<FSonyInputProcessor>();
 		FSlateApplication::Get().RegisterInputPreProcessor(SonyInputProcessor);
 	}
 
 	// Initialize PlatformHardware, (e.g., FLinuxHardware FWindowsHardware FMacHardware, FSonyHardware)
-	std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatform::FLinuxHardware>();
+#if SDL_MAJOR_VERSION == 3
+	std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatformSDL3::FLinuxHardware>();
+#else
+	std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatformSDL2::FLinuxHardware>();
+#endif
 	IPlatformHardwareInfo::SetInstance(std::move(LinuxInstance));
 
 	FDeviceRegistry::Initialize();

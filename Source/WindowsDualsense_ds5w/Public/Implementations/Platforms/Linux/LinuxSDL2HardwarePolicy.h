@@ -5,7 +5,7 @@
 #pragma once
 #include "GCore/Templates/TGenericHardwareInfo.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
-#include "Implementations/Platforms/Commons/CommonsDeviceInfo.h"
+#include "Implementations/Platforms/Linux/LinuxDeviceInfoSDL2.h"
 
 // Sample Linux hardware policy adapter template
 //
@@ -14,7 +14,7 @@
 // concrete Linux implementation in
 // `Source/Private/Implementations/Platforms/Commons/CommonsDeviceInfo.cpp`
 // (e.g., forward to your FCommonsDeviceInfo logic that uses SDL HID).
-namespace FLinuxPlatform
+namespace FLinuxPlatformSDL2
 {
 	struct FLinuxHardwarePolicy;
 	using FLinuxHardware = GamepadCore::TGenericHardwareInfo<FLinuxHardwarePolicy>;
@@ -25,37 +25,38 @@ namespace FLinuxPlatform
 
 		void Read(FDeviceContext* Context)
 		{
-			FCommonsDeviceInfo::Read(Context);
+			FLinuxDeviceInfoSDL2::Read(Context);
 		}
 
 		void Write(FDeviceContext* Context)
 		{
-			FCommonsDeviceInfo::Write(Context);
+			FLinuxDeviceInfoSDL2::Write(Context);
 		}
 
 		void Detect(std::vector<FDeviceContext>& Devices)
 		{
-			FCommonsDeviceInfo::Detect(Devices);
+			FLinuxDeviceInfoSDL2::Detect(Devices);
 		}
 
 		bool CreateHandle(FDeviceContext* Context)
 		{
-			return FCommonsDeviceInfo::CreateHandle(Context);
+			return FLinuxDeviceInfoSDL2::CreateHandle(Context);
 		}
 
 		void InvalidateHandle(FDeviceContext* Context)
 		{
-			FCommonsDeviceInfo::InvalidateHandle(Context);
+			FLinuxDeviceInfoSDL2::InvalidateHandle(Context);
 		}
 
 		void ProcessAudioHaptic(FDeviceContext* Context)
 		{
-			FCommonsDeviceInfo::ProcessAudioHaptic(Context);
+			FLinuxDeviceInfoSDL2::ProcessAudioHaptic(Context);
 		}
 
 		void InitializeAudioDevice(FDeviceContext* Context)
 		{
-			FCommonsDeviceInfo::InitializeAudioDevice(Context);
+			FLinuxDeviceInfoSDL2::InitializeAudioDevice(Context);
 		}
 	};
-} // namespace FLinuxPlatform
+} // namespace FLinuxPlatformSDL2
+

@@ -29,13 +29,15 @@ public class WindowsDualsense_ds5w : ModuleRules
 	    
 		if (Target.Platform == UnrealTargetPlatform.Linux || Target.Platform == UnrealTargetPlatform.Mac)
 		{
-			if ( Target.Version.MajorVersion == 5 && Target.Version.MinorVersion >= 7)
+			if (Target.Version.MajorVersion < 5 || (Target.Version.MajorVersion == 5 && Target.Version.MinorVersion < 7))
 			{
-				PrivateDependencyModuleNames.AddRange(new string[] { "SDL3" });
+				PublicDefinitions.Add("WITH_SDL2=1");
+				PrivateDependencyModuleNames.AddRange(new string[] { "SDL2" });
 			}
 			else
 			{
-				PrivateDependencyModuleNames.AddRange(new string[] { "SDL2" });
+				PublicDefinitions.Add("WITH_SDL2=0");
+				PrivateDependencyModuleNames.AddRange(new string[] { "SDL3" });
 			}
 		}
 	}
