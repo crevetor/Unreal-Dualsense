@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 
-class FCommonsDeviceInfo
+class FLinuxDeviceInfoSDL3
 {
 	/**
 	 * Virtual destructor for the FCommonsDeviceInfo class.
@@ -21,7 +21,7 @@ class FCommonsDeviceInfo
 	 * of derived class objects through base class pointers.
 	 */
 public:
-	~FCommonsDeviceInfo()
+	~FLinuxDeviceInfoSDL3()
 	{
 	}
 
