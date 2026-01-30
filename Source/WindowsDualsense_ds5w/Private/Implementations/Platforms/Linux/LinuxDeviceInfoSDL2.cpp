@@ -10,13 +10,7 @@
 #include "GCore/Types/Structs/Config/GamepadCalibration.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "GImplementations/Utils/GamepadSensors.h"
-#if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION >= 7
-#include "SDL3/SDL_hidapi.h"
-#include "SDL3/SDL_version.h"
-#else
 #include "SDL_hidapi.h"
-#include "SDL_version.h"
-#endif
 #include <cstring>
 #include <string>
 #include <unordered_set>
@@ -215,11 +209,7 @@ bool FLinuxDeviceInfoSDL2::CreateHandle(FDeviceContext* Context)
 	}
 
 	const char* Path = Context->Path.data();
-#if SDL_MAJOR_VERSION >= 3
-	const FPlatformDeviceHandle Handle = SDL_hid_open_path(Path);
-#else
 	const FPlatformDeviceHandle Handle = SDL_hid_open_path(Path, true);
-#endif
 	if (Handle == INVALID_PLATFORM_HANDLE)
 	{
 		return false;
