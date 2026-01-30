@@ -3,23 +3,24 @@
 // Planned Release Year: 2025
 
 #include "WindowsDualsense_ds5w/Public/WindowsDualsense_ds5w.h"
-#include "API/SonyGamepadProxyHelpers.h"
 #include "GCore/Interfaces/IPlatformHardwareInfo.h"
 #include "Helpers/DualSenseLog.h"
 #include "Implementations/Adapters/DeviceRegistry.h"
-#include "Implementations/Platforms/Windows/WindowsHardwarePolicy.h"
 
-#if PLATFORM_LINUX
-#include "Framework/Application/SlateApplication.h"
-#if ENGINE_MAJOR_VERSION < 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 7)
+#if PLATFORM_WINDOWS
+#include "Implementations/Platforms/Windows/WindowsHardwarePolicy.h"
+#elif PLATFORM_LINUX
+#if defined(WHIT_SDL2)
 #include "Implementations/Platforms/Linux/LinuxSDL2HardwarePolicy.h"
 #include "SDL.h"
-#else
+#elif !defined(WHIT_SDL2)
 #include "Implementations/Platforms/Linux/LinuxSDL3HardwarePolicy.h"
 #include "SDL3/SDL.h"
 #endif
+
 #include "Subsystems/SonyInputProcessor.h"
 #endif
+
 #include "DeviceManager.h"
 #include "InputCoreTypes.h"
 #include "Misc/Paths.h"
@@ -32,37 +33,34 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 	RegisterCustomKeys();
 
 #if PLATFORM_WINDOWS
-	// Initialize PlatformHardware, (e.g., FLinuxHardware FWindowsHardware FMacHardware, FSonyHardware)
+	// Initialize PlatformHardware, (e.g., FWindowsHardware FMacHardware, FSonyHardware)
 	std::unique_ptr<IPlatformHardwareInfo> WindowsInstance = std::make_unique<FWindowsPlatform::FWindowsHardware>();
 	IPlatformHardwareInfo::SetInstance(std::move(WindowsInstance));
-
-	// Initialize FDeviceRegistry
-	FDeviceRegistry::Initialize();
-
 #elif PLATFORM_LINUX
-#if SDL_MAJOR_VERSION >= 3
-	if (!SDL_InitSubSystem(SDL_INIT_GAMEPAD))
-#else
-	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) != 0)
-#endif
-	{
-		UE_LOG(LogDualSense, Error, TEXT("Failed to initialize subsystems of SDL: %s"), UTF8_TO_TCHAR(SDL_GetError()));
-	}
-
 	if (FSlateApplication::IsInitialized())
 	{
 		SonyInputProcessor = MakeShared<FSonyInputProcessor>();
 		FSlateApplication::Get().RegisterInputPreProcessor(SonyInputProcessor);
 	}
 
-	// Initialize PlatformHardware, (e.g., FLinuxHardware FWindowsHardware FMacHardware, FSonyHardware)
-#if SDL_MAJOR_VERSION == 3
-	std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatformSDL3::FLinuxHardware>();
-#else
+#ifdef WHIT_SDL2
+	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) != 0)
+	{
+		UE_LOG(LogDualSense, Error, TEXT("Failed to initialize subsystems of SDL: %s"), UTF8_TO_TCHAR(SDL_GetError()));
+	}
 	std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatformSDL2::FLinuxHardware>();
-#endif
-	IPlatformHardwareInfo::SetInstance(std::move(LinuxInstance));
 
+#elif !WHIT_SDL2
+	if (!SDL_InitSubSystem(SDL_INIT_GAMEPAD))
+	{
+		UE_LOG(LogDualSense, Error, TEXT("Failed to initialize subsystems of SDL: %s"), UTF8_TO_TCHAR(SDL_GetError()));
+	}
+	std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatformSDL3::FLinuxHardware>();
+#endif
+
+	// Initialize PlatformHardware, (e.g., FLinuxHardware)
+	IPlatformHardwareInfo::SetInstance(std::move(LinuxInstance));
+	// Initialize FDeviceRegistry
 	FDeviceRegistry::Initialize();
 #endif
 }

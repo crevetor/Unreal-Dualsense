@@ -20,7 +20,6 @@ public class WindowsDualsense_ds5w : ModuleRules
 		PublicIncludePaths.Add(Path.Combine(gamepadCoreRoot, "Source", "Public"));
 		PrivateIncludePaths.Add(Path.Combine(gamepadCoreRoot, "Source", "Private"));
 		
-		
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
 			PublicSystemLibraries.Add("hid.lib");
@@ -29,15 +28,15 @@ public class WindowsDualsense_ds5w : ModuleRules
 	    
 		if (Target.Platform == UnrealTargetPlatform.Linux)
 		{
-			if (Target.Version.MajorVersion < 5 || (Target.Version.MajorVersion == 5 && Target.Version.MinorVersion < 7))
-			{
-				PublicDefinitions.Add("WITH_SDL2=1");
-				PrivateDependencyModuleNames.AddRange(new string[] { "SDL2" });
-			}
-			else
+			if (Target.Version.MajorVersion == 5 && Target.Version.MinorVersion > 6)
 			{
 				PublicDefinitions.Add("WITH_SDL2=0");
 				PrivateDependencyModuleNames.AddRange(new string[] { "SDL3" });
+			}
+			else
+			{
+				PublicDefinitions.Add("WITH_SDL2=1");
+				PrivateDependencyModuleNames.AddRange(new string[] { "SDL2" });
 			}
 		}
 	}

@@ -3,6 +3,8 @@
 // Description: Cross-platform library for DualSense and generic gamepad input support.
 // Targets: Windows, Linux, macOS.
 #pragma once
+
+#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 6
 #include "GCore/Templates/TGenericHardwareInfo.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "Implementations/Platforms/Linux/LinuxDeviceInfoSDL3.h"
@@ -59,3 +61,4 @@ namespace FLinuxPlatformSDL3
 		}
 	};
 } // namespace FLinuxPlatformSDL3
+#endif

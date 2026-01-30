@@ -30,6 +30,7 @@ bool FSonyInputProcessor::IsSonyController(const FInputDeviceId& DeviceId) const
 	ISonyGamepad* Gamepad = FDeviceRegistry::Get()->GetLibraryInstance(DeviceId);
 	if (Gamepad)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("asdasd"));
 		return true;
 	}
 	return false;
