@@ -8,7 +8,7 @@
 #include "DeviceManager.h"
 #include "IInputDeviceModule.h"
 #include "Templates/Function.h"
-#if PLATFORM_LINUX || PLATFORM_MAC
+#if PLATFORM_LINUX
 #include "Framework/Application/SlateApplication.h"
 #endif
 
@@ -93,7 +93,7 @@ private:
 	 */
 	static void RegisterCustomKeys();
 
-#if PLATFORM_LINUX || PLATFORM_MAC
+#if PLATFORM_LINUX
 	/**
 	 * A shared pointer to an instance of an input processor for handling custom input logic.
 	 *

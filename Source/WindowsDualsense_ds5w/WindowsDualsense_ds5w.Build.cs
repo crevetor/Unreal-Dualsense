@@ -27,7 +27,7 @@ public class WindowsDualsense_ds5w : ModuleRules
 			PublicSystemLibraries.Add("Cfgmgr32.lib");
 		}
 	    
-		if (Target.Platform == UnrealTargetPlatform.Linux || Target.Platform == UnrealTargetPlatform.Mac)
+		if (Target.Platform == UnrealTargetPlatform.Linux)
 		{
 			if (Target.Version.MajorVersion < 5 || (Target.Version.MajorVersion == 5 && Target.Version.MinorVersion < 7))
 			{

@@ -9,7 +9,7 @@
 #include "Implementations/Adapters/DeviceRegistry.h"
 #include "Implementations/Platforms/Windows/WindowsHardwarePolicy.h"
 
-#if PLATFORM_LINUX || PLATFORM_MAC
+#if PLATFORM_LINUX
 #include "Framework/Application/SlateApplication.h"
 #if ENGINE_MAJOR_VERSION < 5 || (ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 7)
 #include "Implementations/Platforms/Linux/LinuxSDL2HardwarePolicy.h"
@@ -39,7 +39,7 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 	// Initialize FDeviceRegistry
 	FDeviceRegistry::Initialize();
 
-#elif PLATFORM_LINUX || PLATFORM_MAC
+#elif PLATFORM_LINUX
 #if SDL_MAJOR_VERSION >= 3
 	if (!SDL_InitSubSystem(SDL_INIT_GAMEPAD))
 #else
@@ -69,7 +69,7 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 
 void FWindowsDualsense_ds5wModule::ShutdownModule()
 {
-#if PLATFORM_LINUX || PLATFORM_MAC
+#if PLATFORM_LINUX
 	SDL_Quit();
 
 	if (FSlateApplication::IsInitialized())
