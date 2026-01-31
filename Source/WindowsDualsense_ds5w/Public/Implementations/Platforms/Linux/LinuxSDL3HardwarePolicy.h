@@ -7,7 +7,7 @@
 #include "GCore/Templates/TGenericHardwareInfo.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "Implementations/Platforms/Linux/LinuxDeviceInfoSDL3.h"
-
+#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 6
 // Sample Linux hardware policy adapter template
 //
 // This example satisfies the `IsHardwarePolicy` concept used by
@@ -17,7 +17,7 @@
 // (e.g., forward to your FCommonsDeviceInfo logic that uses SDL HID).
 namespace FLinuxPlatformSDL3
 {
-#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 6
+
 	struct FLinuxHardwarePolicy;
 	using FLinuxHardware = GamepadCore::TGenericHardwareInfo<FLinuxHardwarePolicy>;
 
@@ -60,6 +60,5 @@ namespace FLinuxPlatformSDL3
 			FLinuxDeviceInfoSDL3::InitializeAudioDevice(Context);
 		}
 	};
-#endif
-
 } // namespace FLinuxPlatformSDL3
+#endif
