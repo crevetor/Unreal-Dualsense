@@ -4,7 +4,7 @@
 
 #include "Implementations/Platforms/Linux/LinuxDeviceInfoSDL3.h"
 
-#if defined(__unix__) && !WITH_SDL2
+#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 6
 #include "API/SonyGamepadProxyHelpers.h"
 #include "GCore/Types/ECoreGamepad.h"
 #include "GCore/Types/Structs/Config/GamepadCalibration.h"
@@ -303,5 +303,4 @@ void FLinuxDeviceInfoSDL3::InitializeAudioDevice(FDeviceContext* Context)
 
 	ma_context_uninit(&maContext);
 }
-
 #endif
