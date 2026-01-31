@@ -246,7 +246,6 @@ void DeviceManager::SetDeviceProperty(int32 ControllerId, const FInputDeviceProp
 	static const FName RequestDeviceUpdateName(TEXT("Request_Device_Update"));
 	if (Property->Name == RequestDeviceUpdateName)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("asdddddddddddddddds"))
 		FDeviceRegistry::RequestImmediateDetection();
 		return;
 	}

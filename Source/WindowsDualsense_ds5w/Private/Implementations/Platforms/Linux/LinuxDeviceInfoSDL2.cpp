@@ -4,7 +4,7 @@
 
 #include "Implementations/Platforms/Linux/LinuxDeviceInfoSDL2.h"
 
-#if defined(__unix__) && WITH_SDL2
+#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 7
 #include "API/SonyGamepadProxyHelpers.h"
 #include "GCore/Types/ECoreGamepad.h"
 #include "GCore/Types/Structs/Config/GamepadCalibration.h"
