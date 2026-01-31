@@ -7,7 +7,7 @@
 #include "GCore/Templates/TGenericHardwareInfo.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include "Implementations/Platforms/Linux/LinuxDeviceInfoSDL3.h"
-#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 6
+
 // Sample Linux hardware policy adapter template
 //
 // This example satisfies the `IsHardwarePolicy` concept used by
@@ -60,5 +60,4 @@ namespace FLinuxPlatformSDL3
 			FLinuxDeviceInfoSDL3::InitializeAudioDevice(Context);
 		}
 	};
-} // namespace FLinuxPlatformSDL3
-#endif
+}
