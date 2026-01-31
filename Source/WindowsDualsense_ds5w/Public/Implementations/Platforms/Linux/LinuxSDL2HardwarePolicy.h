@@ -58,4 +58,4 @@ namespace FLinuxPlatformSDL2
 			FLinuxDeviceInfoSDL2::InitializeAudioDevice(Context);
 		}
 	};
-}
+} // namespace FLinuxPlatformSDL2
