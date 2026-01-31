@@ -59,4 +59,3 @@ namespace FLinuxPlatformSDL2
 		}
 	};
 } // namespace FLinuxPlatformSDL2
-
