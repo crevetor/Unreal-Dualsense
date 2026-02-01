@@ -30,7 +30,6 @@ public class WindowsDualsense_ds5w : ModuleRules
 		{
 			if (Target.Version.MajorVersion == 5 && Target.Version.MinorVersion > 6)
 			{
-				PublicDefinitions.Add("WITH_SDL2=0");
 				PrivateDependencyModuleNames.AddRange(new string[] { "SDL3" });
 			}
 			else

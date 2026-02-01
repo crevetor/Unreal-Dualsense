@@ -2,7 +2,6 @@
 // Created for: WindowsDualsense_ds5w - Plugin to support DualSense controller on Windows.
 // Planned Release Year: 2025
 #pragma once
-#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 6
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include <memory>
 #include <vector>
@@ -118,4 +117,3 @@ public:
 	 */
 	static void InitializeAudioDevice(FDeviceContext* Context);
 };
-#endif

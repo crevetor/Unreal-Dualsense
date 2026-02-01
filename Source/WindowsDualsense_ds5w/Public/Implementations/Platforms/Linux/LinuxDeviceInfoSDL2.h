@@ -3,7 +3,7 @@
 // Planned Release Year: 2025
 #pragma once
 
-#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 7
+#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
 #include "GCore/Types/Structs/Context/DeviceContext.h"
 #include <memory>
 #include <vector>

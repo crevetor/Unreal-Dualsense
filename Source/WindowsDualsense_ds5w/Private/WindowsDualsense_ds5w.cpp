@@ -10,10 +10,10 @@
 #if PLATFORM_WINDOWS
 #include "Implementations/Platforms/Windows/WindowsHardwarePolicy.h"
 #elif PLATFORM_LINUX
-#if defined(WHIT_SDL2)
+#if defined(WITH_SDL2)
 #include "Implementations/Platforms/Linux/LinuxSDL2HardwarePolicy.h"
 #include "SDL.h"
-#elif !defined(WHIT_SDL2)
+#elif !defined(WITH_SDL2)
 #include "Implementations/Platforms/Linux/LinuxSDL3HardwarePolicy.h"
 #include "SDL3/SDL.h"
 #endif
@@ -50,7 +50,7 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 	}
 	std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatformSDL2::FLinuxHardware>();
 
-#elif defined(WITH_SDL2) && WITH_SDL2 == 0
+#elif !defined(WITH_SDL2)
 	if (!SDL_InitSubSystem(SDL_INIT_GAMEPAD))
 	{
 		UE_LOG(LogDualSense, Error, TEXT("Failed to initialize subsystems of SDL: %s"), UTF8_TO_TCHAR(SDL_GetError()));

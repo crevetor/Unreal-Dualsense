@@ -5,12 +5,12 @@
 #pragma once
 
 #if ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION > 6
-#ifdef WHIT_SDL2
-#undef WHIT_SDL2
+#ifdef WITH_SDL2
+#undef WITH_SDL2
 #endif
 #else
-#if !defined(WHIT_SDL2)
-#define WHIT_SDL2
+#if !defined(WITH_SDL2)
+#define WITH_SDL2
 #endif
 #endif
 

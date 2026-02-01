@@ -4,8 +4,7 @@
 
 #include "Implementations/Platforms/Linux/LinuxDeviceInfoSDL2.h"
 
-#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION < 7
-#include "API/SonyGamepadProxyHelpers.h"
+#if PLATFORM_LINUX && ENGINE_MAJOR_VERSION == 5 && ENGINE_MINOR_VERSION <= 6
 #include "GCore/Types/ECoreGamepad.h"
 #include "GCore/Types/Structs/Config/GamepadCalibration.h"
 #include "GCore/Types/Structs/Context/DeviceContext.h"
@@ -125,7 +124,6 @@ void FLinuxDeviceInfoSDL2::ConfigureFeatures(FDeviceContext* Context)
 		DualSenseCalibrationSensors(FeatureBuffer, Calibration);
 		Context->Calibration = Calibration;
 	}
-	return;
 }
 
 void FLinuxDeviceInfoSDL2::Write(FDeviceContext* Context)
@@ -303,5 +301,4 @@ void FLinuxDeviceInfoSDL2::InitializeAudioDevice(FDeviceContext* Context)
 
 	ma_context_uninit(&maContext);
 }
-
 #endif
