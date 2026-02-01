@@ -43,14 +43,14 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 		FSlateApplication::Get().RegisterInputPreProcessor(SonyInputProcessor);
 	}
 
-#ifdef WHIT_SDL2
+#if defined(WITH_SDL2) && WITH_SDL2 == 1
 	if (SDL_InitSubSystem(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) != 0)
 	{
 		UE_LOG(LogDualSense, Error, TEXT("Failed to initialize subsystems of SDL: %s"), UTF8_TO_TCHAR(SDL_GetError()));
 	}
 	std::unique_ptr<IPlatformHardwareInfo> LinuxInstance = std::make_unique<FLinuxPlatformSDL2::FLinuxHardware>();
 
-#elif !WHIT_SDL2
+#elif defined(WITH_SDL2) && WITH_SDL2 == 0
 	if (!SDL_InitSubSystem(SDL_INIT_GAMEPAD))
 	{
 		UE_LOG(LogDualSense, Error, TEXT("Failed to initialize subsystems of SDL: %s"), UTF8_TO_TCHAR(SDL_GetError()));
