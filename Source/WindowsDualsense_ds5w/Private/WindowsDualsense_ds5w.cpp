@@ -60,9 +60,9 @@ void FWindowsDualsense_ds5wModule::StartupModule()
 
 	// Initialize PlatformHardware, (e.g., FLinuxHardware)
 	IPlatformHardwareInfo::SetInstance(std::move(LinuxInstance));
+#endif
 	// Initialize FDeviceRegistry
 	FDeviceRegistry::Initialize();
-#endif
 }
 
 void FWindowsDualsense_ds5wModule::ShutdownModule()
